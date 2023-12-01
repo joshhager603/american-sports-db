@@ -6,11 +6,7 @@ public class StateMachine {
 
     private Scanner s;
 
-    public StateMachine(Scanner s){
-        this.s = s;
-    }
-
-    private String[][] transitionTable = new String[][] 
+    private final String[][] transitionTable = new String[][] 
     {
     //      Current      Input       Next       onTransition
     //   +------------+----------+-----------+--------------------+
@@ -19,8 +15,14 @@ public class StateMachine {
         {   "cities",     "0",     "main",      "mainMenu"           },
         {   "cities",     "1",     "cities",    "insertCity"         },
         {   "cities",     "2",     "cities",    "deleteCity"         },
-        {   "cities",     "3",     "cities",    "updateCityPop"      }
+        {   "cities",     "3",     "cities",    "updateCityPop"      },
+        {   "cities",     "4",     "cities",    "getAllCities"       },
+        {   "cities",     "5",     "cities",    "getCity"            }
     };
+
+    public StateMachine(Scanner s){
+        this.s = s;
+    }
 
     public String feed(String input){
         for(int i = 0; i < transitionTable.length; i++){
@@ -58,6 +60,13 @@ public class StateMachine {
                 DatabaseFrontend.updateCityPopMenu(s);
                 DatabaseFrontend.citiesMenu();
                 break;
+            case "getAllCities":
+                DatabaseFrontend.getAllCitiesMenu();
+                DatabaseFrontend.citiesMenu();
+                break;
+            case "getCity":
+                DatabaseFrontend.getCityMenu(s);
+                DatabaseFrontend.citiesMenu();
             case "none":
                 break;
         }
