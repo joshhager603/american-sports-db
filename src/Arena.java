@@ -5,19 +5,19 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class Cities {
-    public static void insertCity(String name, String state, int population, String connectionUrl) {
+public class Arena {
+    public static void insertArena(int cityId, String name, int yearOpened, String connectionUrl) {
 
-        String callStoredProc = "{call dbo.insertCity(?,?,?)}";
+        String callStoredProc = "{call dbo.insertArena(?,?,?)}";
 
         try (Connection connection = DriverManager.getConnection(connectionUrl);
                 CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
 
             connection.setAutoCommit(false);
 
-            prepsStoredProc.setString(1, name);
-            prepsStoredProc.setString(2, state);
-            prepsStoredProc.setInt(3, population);
+            prepsStoredProc.setInt(1, cityId);
+            prepsStoredProc.setString(2, name);
+            prepsStoredProc.setInt(3, yearOpened);
             prepsStoredProc.execute();
 
             connection.commit();
@@ -27,28 +27,9 @@ public class Cities {
         }
     }
 
-    public static void deleteCity(int id, String connectionUrl) {
+    public static void deleteArena(int id, String connectionUrl) {
 
-        String callStoredProc = "{call dbo.deleteCity(?)}";
-
-        try (Connection connection = DriverManager.getConnection(connectionUrl);
-                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
-
-            connection.setAutoCommit(false);
-
-            prepsStoredProc.setInt(1, id);
-            prepsStoredProc.execute();
-
-            connection.commit();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void updateCityPop(int id, int newPop, String connectionUrl) {
-
-        String callStoredProc = "{call dbo.updateCityPop(?, ?)}";
+        String callStoredProc = "{call dbo.deleteArena(?)}";
 
         try (Connection connection = DriverManager.getConnection(connectionUrl);
                 CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
@@ -56,7 +37,6 @@ public class Cities {
             connection.setAutoCommit(false);
 
             prepsStoredProc.setInt(1, id);
-            prepsStoredProc.setInt(2, newPop);
             prepsStoredProc.execute();
 
             connection.commit();
@@ -66,9 +46,46 @@ public class Cities {
         }
     }
 
-    public static ArrayList<ArrayList<String>> getAllCities(String connectionUrl) {
+    public static void updateArenaName(int id, String name, String connectionUrl){
+        String callStoredProc = "{call dbo.updateArenaName(?,?)}";
 
-        String callStoredProc = "{call dbo.getAllCities()}";
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+
+            prepsStoredProc.setInt(1, id);
+            prepsStoredProc.setString(2, name);
+            prepsStoredProc.execute();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateArenaYearOpened(int id, int year_opened, String connectionUrl){
+        String callStoredProc = "{call dbo.updateArenaYearOpened(?,?)}";
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+
+            prepsStoredProc.setInt(1, id);
+            prepsStoredProc.setInt(2, year_opened);
+            prepsStoredProc.execute();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<ArrayList<String>> getAllArenas(String connectionUrl){
+        String callStoredProc = "{call dbo.getAllArenas()}";
 
         ArrayList<ArrayList<String>> table = new ArrayList<>();
 
@@ -77,6 +94,33 @@ public class Cities {
 
             connection.setAutoCommit(false);
 
+            prepsStoredProc.execute();
+                
+            ResultSet rs = prepsStoredProc.getResultSet();
+
+            table = RSParser.getTable(rs);
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return table;
+    }
+
+    public static ArrayList<ArrayList<String>> getArena(String name, String connectionUrl) {
+
+        String callStoredProc = "{call dbo.getArena(?)}";
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+
+            prepsStoredProc.setString(1, name);
             prepsStoredProc.execute();
 
             ResultSet rs = prepsStoredProc.getResultSet();
@@ -91,32 +135,4 @@ public class Cities {
 
         return table;
     }
-
-    public static ArrayList<ArrayList<String>> getCity(String name, String connectionUrl) {
-
-        String callStoredProc = "{call dbo.getCity(?)}";
-
-        ArrayList<ArrayList<String>> table = new ArrayList<>();
-
-        try (Connection connection = DriverManager.getConnection(connectionUrl);
-                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
-
-            connection.setAutoCommit(false);
-
-            prepsStoredProc.setString(1, name);
-            prepsStoredProc.execute();
-
-            ResultSet rs = prepsStoredProc.getResultSet();
-
-            table = RSParser.getTable(rs);
-
-            connection.commit();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return table;
-    }
-
 }
