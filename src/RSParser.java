@@ -44,7 +44,13 @@ public class RSParser {
                 if(headerRowTypes.get(i).equals("int")){
                     row.add("" + rs.getInt(i + 1));
                 }
+                else if(headerRowTypes.get(i).equals("bigint")){
+                    row.add("" + rs.getLong(i + 1));
+                }
                 else if(headerRowTypes.get(i).equals("varchar")){
+                    row.add(rs.getString(i + 1));
+                }
+                else if(headerRowTypes.get(i).equals("char")){
                     row.add(rs.getString(i + 1));
                 }
 

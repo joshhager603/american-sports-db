@@ -15,6 +15,7 @@ public class DatabaseFrontend {
                 "0. Exit Program\n" +
                 "1. Cities\n" +
                 "2. Arena\n" +
+                "3. Team\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -28,6 +29,7 @@ public class DatabaseFrontend {
                 "3. Update the population of a city\n" +
                 "4. View all cities\n" +
                 "5. View a specific city\n" +
+                "6. View all arenas in a specific city\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -83,9 +85,17 @@ public class DatabaseFrontend {
 
         printTable(city);
     }
+
+    public static void getArenasInCityMenu(Scanner s) {
+        System.out.print("\nCity ID: ");
+        int id = s.nextInt();
+
+        ArrayList<ArrayList<String>> arenasInCity = Cities.getArenasInCity(id, connectionUrl);
+
+        printTable(arenasInCity);
+    }
     // ----------------------------------------------------------------- //
 
-    
     // ---------------------------- ARENA ----------------------------- //
     public static void arenaMenu() {
         System.out.print("\nWhat would you like to do?\n" +
@@ -165,6 +175,133 @@ public class DatabaseFrontend {
         ArrayList<ArrayList<String>> arena = Arena.getArena(name, connectionUrl);
 
         printTable(arena);
+    }
+    // ----------------------------------------------------------------- //
+
+    // ---------------------------- TEAM ------------------------------- //
+    public static void teamMenu() {
+        System.out.print("\nWhat would you like to do?\n" +
+                "0. Back\n" +
+                "1. Add a team\n" +
+                "2. Delete a team\n" +
+                "3. Update the name of an team\n" +
+                "4. Update the division of an team\n" +
+                "5. Update the mascot of an team\n" +
+                "6. Update the valuation of an team\n" +
+                "7. View all teams\n" +
+                "8. View a specific team\n" +
+                "\n" +
+                "Choice: ");
+    }
+
+    public static void insertTeamMenu(Scanner s) {
+        System.out.print("\nID of Arena: ");
+        int arenaId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nName: ");
+        String name = s.nextLine();
+
+        System.out.print("\nLeague: ");
+        String league = s.nextLine();
+
+        System.out.print("\nYear Founded: ");
+        int yearFounded = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNumber of Championships: ");
+        int championships = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nDivision: ");
+        String division = s.nextLine();
+
+        System.out.print("\nMascot: ");
+        String mascot = s.nextLine();
+
+        System.out.print("\nValuation: ");
+        long valuation = s.nextLong();
+
+        Team.insertTeam(arenaId, name, league, yearFounded, championships, division, mascot, valuation, connectionUrl);
+
+        System.out.print("\nSuccessfully added " + name + "!\n");
+    }
+
+    public static void deleteTeamMenu(Scanner s) {
+        System.out.print("\nTeam ID: ");
+        int id = s.nextInt();
+        s.nextLine();
+
+        Team.deleteTeam(id, connectionUrl);
+
+        System.out.print("\nSuccessfully deleted team with ID " + id + ".\n");
+    }
+
+    public static void updateTeamNameMenu(Scanner s) {
+        System.out.print("\nTeam ID: ");
+        int id = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNew name: ");
+        String newName = s.nextLine();
+
+        Team.updateTeamName(id, newName, connectionUrl);
+
+        System.out.print("\nSuccessfully updated team with ID " + id + "!\n");
+    }
+
+    public static void updateTeamDivisionMenu(Scanner s) {
+        System.out.print("\nTeam ID: ");
+        int id = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNew division: ");
+        String newDivision = s.nextLine();
+
+        Team.updateTeamDivision(id, newDivision, connectionUrl);
+
+        System.out.print("\nSuccessfully updated team with ID " + id + "!\n");
+    }
+
+    public static void updateTeamMascotMenu(Scanner s) {
+        System.out.print("\nTeam ID: ");
+        int id = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNew mascot: ");
+        String newMascot = s.nextLine();
+
+        Team.updateTeamMascot(id, newMascot, connectionUrl);
+
+        System.out.print("\nSuccessfully updated team with ID " + id + "!\n");
+    }
+
+    public static void updateTeamValuationMenu(Scanner s) {
+        System.out.print("\nTeam ID: ");
+        int id = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNew valuation: ");
+        long newValuation = s.nextLong();
+
+        Team.updateTeamValuation(id, newValuation, connectionUrl);
+
+        System.out.print("\nSuccessfully updated team with ID " + id + "!\n");
+    }
+
+    public static void getAllTeamsMenu() {
+        ArrayList<ArrayList<String>> arenas = Team.getAllTeams(connectionUrl);
+
+        printTable(arenas);
+    }
+
+    public static void getTeamMenu(Scanner s) {
+        System.out.print("\nTeam: ");
+        String name = s.nextLine();
+
+        ArrayList<ArrayList<String>> team = Team.getTeam(name, connectionUrl);
+
+        printTable(team);
     }
     // ----------------------------------------------------------------- //
 
