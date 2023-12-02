@@ -85,7 +85,7 @@ public class DatabaseFrontend {
     }
     // ----------------------------------------------------------------- //
 
-
+    
     // ---------------------------- ARENA ----------------------------- //
     public static void arenaMenu() {
         System.out.print("\nWhat would you like to do?\n" +
