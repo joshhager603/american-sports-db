@@ -34,6 +34,7 @@ public class DatabaseFrontend {
                 "5. View a specific city\n" +
                 "6. View all arenas in a specific city\n" +
                 "7. View all active teams in a specific city\n" +
+                "8. View all championships won by a city\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -106,6 +107,15 @@ public class DatabaseFrontend {
         ArrayList<ArrayList<String>> activeTeamsInCity = Cities.getActiveTeamsInCity(id, connectionUrl);
 
         printTable(activeTeamsInCity);
+    }
+
+    public static void getWinsByCityMenu(Scanner s){
+        System.out.print("\nCity ID: ");
+        int id = s.nextInt();
+        
+        ArrayList<ArrayList<String>> winsByCity = Cities.getWinsByCity(id, connectionUrl);
+
+        printTable(winsByCity);
     }
     // ----------------------------------------------------------------- //
 
@@ -204,6 +214,7 @@ public class DatabaseFrontend {
                 "7. View all teams\n" +
                 "8. View a specific team\n" +
                 "9. Assign a team to a city\n" +
+                "10. Add a new team with a defined owner\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -334,6 +345,45 @@ public class DatabaseFrontend {
         PlaysIn.assignTeamToCity(teamId, cityId, active, connectionUrl);
 
         System.out.print("\nSuccessfully assigned team ID " + teamId + " to city ID " + cityId + "!\n");
+    }
+
+    public static void insertNewTeamWithOwnerMenu(Scanner s) {
+        System.out.print("\nID of Arena: ");
+        int arenaId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nName: ");
+        String name = s.nextLine();
+
+        System.out.print("\nLeague: ");
+        String league = s.nextLine();
+
+        System.out.print("\nYear Founded: ");
+        int yearFounded = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNumber of Championships: ");
+        int championships = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nDivision: ");
+        String division = s.nextLine();
+
+        System.out.print("\nMascot: ");
+        String mascot = s.nextLine();
+
+        System.out.print("\nValuation: ");
+        long valuation = s.nextLong();
+
+        System.out.print("\nOwner name ('none' if the owner is a group): ");
+        String ownerName = s.nextLine();
+
+        System.out.print("\nOwner group ('none' if the owner is a person): ");
+        String ownerGroup = s.nextLine();
+
+        Team.insertNewTeamWithOwner(arenaId, name, league, yearFounded, championships, division, mascot, valuation, connectionUrl, ownerName, ownerGroup);
+
+        System.out.print("\nSuccessfully added " + name + "!\n");
     }
     // ----------------------------------------------------------------- //
 

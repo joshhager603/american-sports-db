@@ -207,4 +207,35 @@ public class Team {
 
         return table;
     }
+
+    public static void insertNewTeamWithOwner(int arenaId, String name, String league, int yearFounded,
+            int championships, String division, String mascot, long valuation, String ownerName, String ownerGroup,
+            String connectionUrl){
+        String callStoredProc = "{call dbo.insertNewTeamWithOwner(?,?,?,?,?,?,?,?,?,?)}";
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+
+            prepsStoredProc.setInt(1, arenaId);
+            prepsStoredProc.setString(2, name);
+            prepsStoredProc.setString(3, league);
+            prepsStoredProc.setInt(4, yearFounded);
+            prepsStoredProc.setInt(5, championships);
+            prepsStoredProc.setInt(6, division);
+            prepsStoredProc.setString(7, mascot);
+            prepsStoredProc.setLong(8, valuation);
+            if(ownerName.equals("none")){ prepsStoredProc.setNull(9, Types.STRING); }
+            else{ prepsStoredProc.setInt(9, owner_name); }
+            if(ownerGroup.equals("none")){ prepsStoredProc.setNull(10, Types.STRING); }
+            else{ prepsStoredProc.setInt(10, owner_group); }
+            prepsStoredProc.execute();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

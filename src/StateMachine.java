@@ -25,6 +25,7 @@ public class StateMachine {
         {   "cities",           "5",     "cities",                  "getCity"                       },
         {   "cities",           "6",     "cities",                  "getArenasInCity"               },
         {   "cities",           "7",     "cities",                  "getActiveTeamsInCity"          },
+        {   "cities",           "8",     "cities",                  "getWinsByCity"                 },
         {   "arena",            "0",     "main",                    "mainMenu"                      },
         {   "arena",            "1",     "arena",                   "insertArena"                   },
         {   "arena",            "2",     "arena",                   "deleteArena"                   },
@@ -42,6 +43,7 @@ public class StateMachine {
         {   "team",             "7",     "team",                    "getAllTeams"                   },
         {   "team",             "8",     "team",                    "getTeam"                       },
         {   "team",             "9",     "team",                    "assignTeamToCity"              },
+        {   "team",             "10",    "team",                    "insertNewTeamWithOwner"        },
         {   "super_bowl",       "0",     "main",                    "mainMenu"                      },
         {   "super_bowl",       "1",     "super_bowl",              "insertSuperBowl"               },
         {   "super_bowl",       "2",     "super_bowl",              "deleteSuperBowl"               },
@@ -119,6 +121,10 @@ public class StateMachine {
                 DatabaseFrontend.getActiveTeamsInCityMenu(s);
                 DatabaseFrontend.citiesMenu();
                 break;
+            case "getWinsByCity":
+                DatabaseFrontend.getWinsByCityMenu(s);
+                DatabaseFrontend.citiesMenu();
+                break;
             case "arenaMenu":
                 DatabaseFrontend.arenaMenu();
                 break;
@@ -184,6 +190,10 @@ public class StateMachine {
             case "assignTeamToCity":
                 DatabaseFrontend.assignTeamToCityMenu(s);
                 DatabaseFrontend.teamMenu();
+                break;
+            case "insertNewTeamWithOwner":
+                DatabaseFrontend.insertNewTeamWithOwnerMenu(s);
+                Database.Frontend.teamMenu();
                 break;
             case "superBowlMenu":
                 DatabaseFrontend.superBowlMenu();
