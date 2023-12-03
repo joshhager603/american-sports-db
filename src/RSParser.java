@@ -53,6 +53,9 @@ public class RSParser {
                 else if(headerRowTypes.get(i).equals("char")){
                     row.add(rs.getString(i + 1));
                 }
+                else if(headerRowTypes.get(i).equals("bit")){
+                    row.add("" + rs.getBoolean(i + 1));
+                }
 
             }
 

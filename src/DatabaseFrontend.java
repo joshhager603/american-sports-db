@@ -30,6 +30,7 @@ public class DatabaseFrontend {
                 "4. View all cities\n" +
                 "5. View a specific city\n" +
                 "6. View all arenas in a specific city\n" +
+                "7. View all active teams in a specific city\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -93,6 +94,15 @@ public class DatabaseFrontend {
         ArrayList<ArrayList<String>> arenasInCity = Cities.getArenasInCity(id, connectionUrl);
 
         printTable(arenasInCity);
+    }
+
+    public static void getActiveTeamsInCityMenu(Scanner s) {
+        System.out.print("\nCity ID: ");
+        int id = s.nextInt();
+
+        ArrayList<ArrayList<String>> activeTeamsInCity = Cities.getActiveTeamsInCity(id, connectionUrl);
+
+        printTable(activeTeamsInCity);
     }
     // ----------------------------------------------------------------- //
 
@@ -184,12 +194,13 @@ public class DatabaseFrontend {
                 "0. Back\n" +
                 "1. Add a team\n" +
                 "2. Delete a team\n" +
-                "3. Update the name of an team\n" +
-                "4. Update the division of an team\n" +
-                "5. Update the mascot of an team\n" +
-                "6. Update the valuation of an team\n" +
+                "3. Update the name of a team\n" +
+                "4. Update the division of a team\n" +
+                "5. Update the mascot of a team\n" +
+                "6. Update the valuation of a team\n" +
                 "7. View all teams\n" +
                 "8. View a specific team\n" +
+                "9. Assign a team to a city\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -302,6 +313,24 @@ public class DatabaseFrontend {
         ArrayList<ArrayList<String>> team = Team.getTeam(name, connectionUrl);
 
         printTable(team);
+    }
+
+    public static void assignTeamToCityMenu(Scanner s) {
+        System.out.print("\nID of Team: ");
+        int teamId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nID of City: ");
+        int cityId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nIs this team active in this city? (y/n): ");
+        String activeString = s.nextLine();
+        boolean active = activeString.equals("y") ? true : false;
+
+        PlaysIn.assignTeamToCity(teamId, cityId, active, connectionUrl);
+
+        System.out.print("\nSuccessfully assigned team ID " + teamId + " to city ID " + cityId + "!\n");
     }
     // ----------------------------------------------------------------- //
 
