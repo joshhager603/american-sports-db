@@ -2,8 +2,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+
 
 public class PlaysIn {
     public static void assignTeamToCity(int teamId, int cityId, boolean active, String connectionUrl) {
