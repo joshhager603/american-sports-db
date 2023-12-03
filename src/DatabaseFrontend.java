@@ -201,6 +201,8 @@ public class DatabaseFrontend {
                 "7. View all teams\n" +
                 "8. View a specific team\n" +
                 "9. Assign a team to a city\n" +
+                "10. Set the active status of a team in a city\n" +
+                "11. View the city a team is active in\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -331,6 +333,33 @@ public class DatabaseFrontend {
         PlaysIn.assignTeamToCity(teamId, cityId, active, connectionUrl);
 
         System.out.print("\nSuccessfully assigned team ID " + teamId + " to city ID " + cityId + "!\n");
+    }
+
+    public static void setActiveStatusMenu(Scanner s) {
+        System.out.print("\nID of Team: ");
+        int teamId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nID of City: ");
+        int cityId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nIs this team active in this city? (y/n): ");
+        String activeString = s.nextLine();
+        boolean active = activeString.equals("y") ? true : false;
+
+        PlaysIn.setActiveStatus(teamId, cityId, active, connectionUrl);
+
+        System.out.print("\nSuccessfully set the status of team ID " + teamId + " in city ID " + cityId + "!\n");
+    }
+
+    public static void getActiveCityMenu(Scanner s) {
+        System.out.print("\nID of Team: ");
+        int teamId = s.nextInt();
+
+        ArrayList<ArrayList<String>> team = Team.getActiveCity(teamId, connectionUrl);
+
+        printTable(team);
     }
     // ----------------------------------------------------------------- //
 
