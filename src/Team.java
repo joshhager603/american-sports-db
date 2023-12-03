@@ -180,4 +180,31 @@ public class Team {
 
         return table;
     }
+
+    public static ArrayList<ArrayList<String>> getActiveCity(int teamId, String connectionUrl) {
+
+        String callStoredProc = "{call dbo.getActiveCity(?)}";
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+
+            prepsStoredProc.setInt(1, teamId);
+            prepsStoredProc.execute();
+
+            ResultSet rs = prepsStoredProc.getResultSet();
+
+            table = RSParser.getTable(rs);
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return table;
+    }
 }

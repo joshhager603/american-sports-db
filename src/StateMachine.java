@@ -38,7 +38,9 @@ public class StateMachine {
         {   "team",       "6",     "team",      "updateTeamValuation"       },
         {   "team",       "7",     "team",      "getAllTeams"               },
         {   "team",       "8",     "team",      "getTeam"                   },
-        {   "team",       "9",     "team",      "assignTeamToCity"          }
+        {   "team",       "9",     "team",      "assignTeamToCity"          },
+        {   "team",       "10",    "team",      "setActiveStatus"           },
+        {   "team",       "11",    "team",      "getActiveCity"             }
     };
 
     public StateMachine(Scanner s){
@@ -159,6 +161,14 @@ public class StateMachine {
                 break;
             case "assignTeamToCity":
                 DatabaseFrontend.assignTeamToCityMenu(s);
+                DatabaseFrontend.teamMenu();
+                break;
+            case "setActiveStatus":
+                DatabaseFrontend.setActiveStatusMenu(s);
+                DatabaseFrontend.teamMenu();
+                break;
+            case "getActiveCity":
+                DatabaseFrontend.getActiveCityMenu(s);
                 DatabaseFrontend.teamMenu();
                 break;
             case "none":
