@@ -224,4 +224,30 @@ public class Cities {
 
         return table;
     }
+
+    public static ArrayList<ArrayList<String>> getWinsByCity(int id, String connectionUrl){
+        String callStoredProc = "{call dbo.getWinsByCity(?)}";
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+
+            prepsStoredProc.setInt(1, id);
+            prepsStoredProc.execute();
+
+            ResultSet rs = prepsStoredProc.getResultSet();
+
+            table = RSParser.getTable(rs);
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return table;
+    }
 }

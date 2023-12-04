@@ -16,13 +16,16 @@ public class DatabaseFrontend {
                 "1. Cities\n" +
                 "2. Arena\n" +
                 "3. Team\n" +
+                "4. Super Bowl\n" +
+                "5. NBA Championship\n" +
+                "6. Stanley Cup\n" +
                 "\n" +
                 "Choice: ");
     }
 
     // ---------------------------- CITIES ----------------------------- //
     public static void citiesMenu() {
-        System.out.print("\nWhat would you like to do?\n" +
+        System.out.print("\nWhat would you like to do?\n" + 
                 "0. Back\n" +
                 "1. Add a city\n" +
                 "2. Delete a city\n" +
@@ -33,6 +36,7 @@ public class DatabaseFrontend {
                 "7. View all active teams in a specific city\n" +
                 "8. Delete all cities with no active or inactive teams\n" +
                 "9. View all cities with no active or inactive teams\n" +
+                "10. View all championships won by a city\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -118,6 +122,15 @@ public class DatabaseFrontend {
         ArrayList<ArrayList<String>> citiesNoTeams = Cities.getCitiesNoTeams(connectionUrl);
 
         printTable(citiesNoTeams);
+    }
+
+    public static void getWinsByCityMenu(Scanner s){
+        System.out.print("\nCity ID: ");
+        int id = s.nextInt();
+        
+        ArrayList<ArrayList<String>> winsByCity = Cities.getWinsByCity(id, connectionUrl);
+
+        printTable(winsByCity);
     }
     // ----------------------------------------------------------------- //
 
@@ -218,6 +231,7 @@ public class DatabaseFrontend {
                 "9. Assign a team to a city\n" +
                 "10. Set the active status of a team in a city\n" +
                 "11. View the city a team is active in\n" +
+                "12. Add a new team with a defined owner\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -350,6 +364,46 @@ public class DatabaseFrontend {
         System.out.print("\nSuccessfully assigned team ID " + teamId + " to city ID " + cityId + "!\n");
     }
 
+    public static void insertNewTeamWithOwnerMenu(Scanner s) {
+        System.out.print("\nID of Arena: ");
+        int arenaId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nName: ");
+        String name = s.nextLine();
+
+        System.out.print("\nLeague: ");
+        String league = s.nextLine();
+
+        System.out.print("\nYear Founded: ");
+        int yearFounded = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNumber of Championships: ");
+        int championships = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nDivision: ");
+        String division = s.nextLine();
+
+        System.out.print("\nMascot: ");
+        String mascot = s.nextLine();
+
+        System.out.print("\nValuation: ");
+        long valuation = s.nextLong();
+        s.nextLine();
+
+        System.out.print("\nOwner name ('none' if the owner is a group): ");
+        String ownerName = s.nextLine();
+
+        System.out.print("\nOwner group ('none' if the owner is a person): ");
+        String ownerGroup = s.nextLine();
+
+        Team.insertNewTeamWithOwner(arenaId, name, league, yearFounded, championships, division, mascot, valuation, ownerName, ownerGroup, connectionUrl);
+
+        System.out.print("\nSuccessfully added " + name + "!\n");
+    }
+
     public static void setActiveStatusMenu(Scanner s) {
         System.out.print("\nID of Team: ");
         int teamId = s.nextInt();
@@ -376,6 +430,244 @@ public class DatabaseFrontend {
 
         printTable(team);
     }
+    // ----------------------------------------------------------------- //
+
+    // ---------------------------- Super Bowl ------------------------------- //
+    public static void superBowlMenu() {
+        System.out.print("\nWhat would you like to do?\n" +
+                "0. Back\n" +
+                "1. Add a Super Bowl\n" +
+                "2. Delete a Super Bowl\n" +
+                "3. Update a Super Bowl Winner\n" +
+                "4. View all super bowls\n" +
+                "5. View a specific Super Bowl\n" +
+                "6. View all Super Bowls a team has won\n" +
+                "\n" +
+                "Choice: ");
+    }
+
+    public static void insertSuperBowlMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nID of team: ");
+        int teamId = s.nextInt();
+        s.nextLine();
+
+        SuperBowl.insertSuperBowl(year, teamId, connectionUrl);
+
+        System.out.print("\nSuccessfully added " + year + " Super Bowl!\n");
+    }
+
+    public static void deleteSuperBowlMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        SuperBowl.deleteSuperBowl(year, connectionUrl);
+
+        System.out.print("\nSuccessfully deleted Super Bowl from " + year + ".\n");
+    }
+
+    public static void updateSuperBowlWinnerMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNew winner id: ");
+        int newWinner = s.nextInt();
+        s.nextLine();
+
+        SuperBowl.updateSuperBowlWinner(year, newWinner, connectionUrl);
+
+        System.out.print("\nSuccessfully updated Super Bowl from " + year + "!\n");
+    }
+
+    public static void getAllSuperBowls() {
+        ArrayList<ArrayList<String>> superBowls = SuperBowl.getAllSuperBowls(connectionUrl);
+
+        printTable(superBowls);
+    }
+
+    public static void getSuperBowlWinner(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        ArrayList<ArrayList<String>> team = SuperBowl.getSuperBowlWinner(year, connectionUrl);
+
+        printTable(team);
+    }
+
+    public static void getSuperBowlsWon(Scanner s) {
+        System.out.print("\nID of Team: ");
+        int winnerId = s.nextInt();
+        s.nextLine();
+
+        ArrayList<ArrayList<String>> superBowls = SuperBowl.getSuperBowlsWon(winnerId, connectionUrl);
+
+        printTable(superBowls);
+    }
+    // ----------------------------------------------------------------- //
+
+    // ---------------------------- NBA Championship ------------------------------- //
+    public static void nbaChampionshipMenu() {
+        System.out.print("\nWhat would you like to do?\n" +
+                "0. Back\n" +
+                "1. Add an NBA Championship\n" +
+                "2. Delete an NBA Championship\n" +
+                "3. Update an NBA Championship Winner\n" +
+                "4. View all NBA Championships\n" +
+                "5. View a specific NBA Championship winner\n" +
+                "6. View all NBA Championships a team has won\n" +
+                "\n" +
+                "Choice: ");
+    }
+
+    public static void insertNBAChampionshipMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nID of team: ");
+        int teamId = s.nextInt();
+        s.nextLine();
+
+        NbaChampionship.insertNBAChampionship(year, teamId, connectionUrl);
+
+        System.out.print("\nSuccessfully added " + year + " NBA Championship!\n");
+    }
+
+    public static void deleteNBAChampionshipMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        NbaChampionship.deleteNBAChampionship(year, connectionUrl);
+
+        System.out.print("\nSuccessfully deleted NBA Championship from " + year + ".\n");
+    }
+
+    public static void updateNBAChampionshipWinnerMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNew winner id: ");
+        int newWinner = s.nextInt();
+        s.nextLine();
+
+        NbaChampionship.updateNBAChampionshipWinner(year, newWinner, connectionUrl);
+
+        System.out.print("\nSuccessfully updated Super Bowl from " + year + "!\n");
+    }
+
+    public static void getAllNBAChampionships() {
+        ArrayList<ArrayList<String>> nbaChampionships = NbaChampionship.getAllNBAChampionships(connectionUrl);
+
+        printTable(nbaChampionships);
+    }
+
+    public static void getNBAChamionshipWinner(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        ArrayList<ArrayList<String>> team = NbaChampionship.getNBAChampionshipWinner(year, connectionUrl);
+
+        printTable(team);
+    }
+
+    public static void getNBAChampionshipsWon(Scanner s) {
+        System.out.print("\nID of Team: ");
+        int winnerId = s.nextInt();
+        s.nextLine();
+
+        ArrayList<ArrayList<String>> championships = NbaChampionship.getNBAChampionshipsWon(winnerId, connectionUrl);
+
+        printTable(championships);
+    }
+    // ----------------------------------------------------------------- //
+
+    // ---------------------------- Stanley Cup ------------------------------- //
+    public static void stanleyCupMenu() {
+        System.out.print("\nWhat would you like to do?\n" +
+                "0. Back\n" +
+                "1. Add a Stanley Cup\n" +
+                "2. Delete a Stanley Cup\n" +
+                "3. Update a Stanley Cup Winner\n" +
+                "4. View all Stanley Cups\n" +
+                "5. View a specific Stanley Cup winner\n" +
+                "6. View all Stanley Cups a team has won\n" +
+                "\n" +
+                "Choice: ");
+    }
+
+    public static void insertStanleyCupMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nID of team: ");
+        int teamId = s.nextInt();
+        s.nextLine();
+
+        StanleyCup.insertStanleyCup(year, teamId, connectionUrl);
+
+        System.out.print("\nSuccessfully added " + year + " Stanley Cup!\n");
+    }
+
+    public static void deleteStanleyCupMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        StanleyCup.deleteStanleyCup(year, connectionUrl);
+
+        System.out.print("\nSuccessfully deleted Stanley Cup from " + year + ".\n");
+    }
+
+    public static void updateStanleyCupMenu(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nNew winner id: ");
+        int newWinner = s.nextInt();
+        s.nextLine();
+
+        StanleyCup.updateStanleyCupWinner(year, newWinner, connectionUrl);
+
+        System.out.print("\nSuccessfully updated Stanley Cup from " + year + "!\n");
+    }
+
+    public static void getAllStanleyCups() {
+        ArrayList<ArrayList<String>> stanleyCups = StanleyCup.getAllStanleyCups(connectionUrl);
+
+        printTable(stanleyCups);
+    }
+
+    public static void getStanleyCupWinner(Scanner s) {
+        System.out.print("\nYear: ");
+        int year = s.nextInt();
+        s.nextLine();
+
+        ArrayList<ArrayList<String>> team = StanleyCup.getStanleyCupWinner(year, connectionUrl);
+
+        printTable(team);
+    }
+
+    public static void getStanleyCupsWon(Scanner s) {
+        System.out.print("\nID of Team: ");
+        int winnerId = s.nextInt();
+        s.nextLine();
+
+        ArrayList<ArrayList<String>> championships = StanleyCup.getStanleyCupsWon(winnerId, connectionUrl);
+
+        printTable(championships);
+    }
+
     // ----------------------------------------------------------------- //
 
     public static void printTable(ArrayList<ArrayList<String>> table) {
