@@ -45,15 +45,14 @@ public class Owner {
         }
     }
 
-    public static void updateOwners(int id, String owner, String ownerGroup, String connectionUrl) {
+    public static void updateOwner(int id, String owner, String ownerGroup, String connectionUrl) {
 
-        String callStoredProc = "{call dbo.updateOwners(?, ?, ?)}";
+        String callStoredProc = "{call dbo.updateOwner(?, ?, ?)}";
 
         try (Connection connection = DriverManager.getConnection(connectionUrl);
                 CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
 
             connection.setAutoCommit(false);
-
             prepsStoredProc.setInt(1, id);
             prepsStoredProc.setString(2, owner);
             prepsStoredProc.setString(3, ownerGroup);
@@ -133,6 +132,57 @@ public class Owner {
 
             ResultSet rs = prepsStoredProc.getResultSet();
 
+            table = RSParser.getTable(rs);
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return table;
+    }
+
+    public static ArrayList<ArrayList<String>> updateOwnerAndAcquisition(int owner_id, int team_id, String owner, String ownerGroup, int valuation, String connectionUrl){
+
+        String callStoredProc = "{call dbo.updateOwnerAndAcquisition(?,?,?,?,?)}";
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+            prepsStoredProc.setInt(1, owner_id);
+            prepsStoredProc.setInt(2, team_id);
+            prepsStoredProc.setString(3, owner);
+            prepsStoredProc.setString(4, ownerGroup);
+            prepsStoredProc.setInt(5, valuation);
+            prepsStoredProc.execute();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return table;
+    }
+
+    public static ArrayList<ArrayList<String>> getLeagueOwners(String league, String connectionUrl){
+
+        String callStoredProc = "{call dbo.getLeagueOwners(?)}";
+
+        ArrayList<ArrayList<String>> table = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+                CallableStatement prepsStoredProc = connection.prepareCall(callStoredProc);) {
+
+            connection.setAutoCommit(false);
+            prepsStoredProc.setString(1, league);
+            prepsStoredProc.execute();
+
+            ResultSet rs = prepsStoredProc.getResultSet();
             table = RSParser.getTable(rs);
 
             connection.commit();

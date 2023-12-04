@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class StateMachine {
     
     private String currentState = "main";
@@ -13,7 +14,8 @@ public class StateMachine {
         {   "main",       "0",     "exit",      "none"                      },
         {   "main",       "1",     "cities",    "citiesMenu"                },
         {   "main",       "2",     "arena",     "arenaMenu"                 },
-        {   "main",       "3",     "team",      "teamMenu"                  }, 
+        {   "main",       "3",     "team",      "teamMenu"                  },
+        {   "main",       "7",     "owner",     "ownerMenu"                 }, 
         {   "cities",     "0",     "main",      "mainMenu"                  },
         {   "cities",     "1",     "cities",    "insertCity"                },
         {   "cities",     "2",     "cities",    "deleteCity"                },
@@ -40,7 +42,17 @@ public class StateMachine {
         {   "team",       "8",     "team",      "getTeam"                   },
         {   "team",       "9",     "team",      "assignTeamToCity"          },
         {   "team",       "10",    "team",      "setActiveStatus"           },
-        {   "team",       "11",    "team",      "getActiveCity"             }
+        {   "team",       "11",    "team",      "getActiveCity"             }, 
+        {   "owner",      "0",     "owner",     "mainMenu"                  },
+        {   "owner",      "1",     "owner",     "insertOwner"               },
+        {   "owner",      "2",     "owner",     "deleteOwner"               },
+        {   "owner",      "3",     "owner",     "updateOwner"               },
+        {   "owner",      "4",     "owner",     "getAllOwners"              },
+        {   "owner",      "5",     "owner",     "getOwners"                 },
+        {   "owner",      "6",     "owner",     "getOwnerGroups"            },
+        {   "owner",      "7",     "owner",     "assignOwnerToTeam"         },
+        {   "owner",      "8",     "owner",     "updateOwnerAndAcquisition" },
+        {   "owner",      "9",     "owner",     "getLeagueOwners"           }
     };
 
     public StateMachine(Scanner s){
@@ -170,6 +182,45 @@ public class StateMachine {
             case "getActiveCity":
                 DatabaseFrontend.getActiveCityMenu(s);
                 DatabaseFrontend.teamMenu();
+                break;
+            case "ownerMenu":
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "insertOwner":
+                DatabaseFrontend.insertOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "deleteOwner":
+                DatabaseFrontend.deleteOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "updateOwner":
+                DatabaseFrontend.updateOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getOwners":
+                DatabaseFrontend.getOwnersMenu();
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getOwnerGroupsMenu":
+                DatabaseFrontend.getOwnerGroupsMenu();
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getAllOwners":
+                DatabaseFrontend.getAllOwnersMenu();
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "assignOwnerToTeam":
+                DatabaseFrontend.assignOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "updateOwnerAndAcquisition":
+                DatabaseFrontend.updateOwnerAndAcquisitionMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getLeagueOwners":
+                DatabaseFrontend.getLeagueOwnersMenu(s);
+                DatabaseFrontend.ownerMenu();
                 break;
             case "none":
                 break;

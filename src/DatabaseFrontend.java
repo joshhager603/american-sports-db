@@ -16,6 +16,7 @@ public class DatabaseFrontend {
                 "1. Cities\n" +
                 "2. Arena\n" +
                 "3. Team\n" +
+                "7. Owner\n" + 
                 "\n" +
                 "Choice: ");
     }
@@ -188,6 +189,7 @@ public class DatabaseFrontend {
     }
     // ----------------------------------------------------------------- //
 
+    
     // ---------------------------- TEAM ------------------------------- //
     public static void teamMenu() {
         System.out.print("\nWhat would you like to do?\n" +
@@ -363,6 +365,144 @@ public class DatabaseFrontend {
     }
     // ----------------------------------------------------------------- //
 
+    // ---------------------------- Owner ------------------------------ //
+
+    public static void ownerMenu() {
+        System.out.print("\nWhat would you like to do?\n" +
+                "0. Back\n" +
+                "1. Add an owner\n" +
+                "2. Delete an owner/ownership group\n" +
+                "3. Update an owner/ownership group\n" +
+                "4. View all owners\n" +
+                "5. View all single owners\n" +
+                "6. View all ownership groups\n" +
+                "7. Assign owner to team\n" +
+                "8. Update owner and acquisition value\n" +
+                "9. Get owners from a league" + 
+                "\n" +
+                "Choice: ");
+    }
+
+    public static void insertOwnerMenu(Scanner s) {
+        System.out.print("\n1. Owner 2. Owner Group \n");
+        int ownerOption = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nName: ");
+        String name = s.nextLine();
+
+        if(ownerOption == 1){
+            Owner.insertOwner(name, null, connectionUrl);
+            System.out.print("\nSuccessfully added " + name + "!\n");
+        }
+        else if (ownerOption == 2){
+            Owner.insertOwner(null, name, connectionUrl);
+            System.out.print("\nSuccessfully added " + name + "!\n");
+        }
+    }
+
+    public static void deleteOwnerMenu(Scanner s) {
+        System.out.print("\nOwner ID: ");
+        int id = s.nextInt();
+
+        Owner.deleteOwner(id, connectionUrl);
+
+        System.out.print("\nSuccessfully deleted owner with ID " + id + ".\n");
+    }
+
+    public static void updateOwnerMenu(Scanner s) {
+        System.out.print("\nOwner ID: ");
+        int id = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\n1. Owner 2. Owner Group \n");
+        int ownerOption = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nName: ");
+        String name = s.nextLine();
+
+        if(ownerOption == 1){
+            Owner.updateOwner(id, name, null, connectionUrl);
+            System.out.print("\nSuccessfully updated " + name + "!\n");
+        }
+        else if (ownerOption == 2){
+            Owner.updateOwner(id, null, name, connectionUrl);
+            System.out.print("\nSuccessfully updated " + name + "!\n");
+        }
+    }
+
+   public static void getAllOwnersMenu() {
+        ArrayList<ArrayList<String>> owners = Owner.getAllOwners(connectionUrl);
+        
+        printTable(owners);
+    }
+
+    public static void getOwnersMenu() {
+        ArrayList<ArrayList<String>> owners = Owner.getOwners(connectionUrl);
+
+        printTable(owners);
+    }
+
+    public static void getOwnerGroupsMenu() {
+        ArrayList<ArrayList<String>> owners = Owner.getOwnerGroups(connectionUrl);
+
+        printTable(owners);
+    }
+
+    public static void assignOwnerMenu(Scanner s){
+        System.out.print("\nOwner ID: ");
+        int ownerId = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nTeam ID: ");
+        int teamId = s.nextInt();
+        s.nextLine();
+
+        Owns.assignOwnerToTeam(ownerId, teamId, connectionUrl);
+
+        System.out.print("Assigned!");
+    }
+
+    public static void updateOwnerAndAcquisitionMenu(Scanner s){
+        System.out.print("\nOwner ID: ");
+        int owner_id = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nTeam ID: ");
+        int team_id = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\n1. Owner 2. Owner Group \n");
+        int ownerOption = s.nextInt();
+        s.nextLine();
+
+        System.out.print("\nName: ");
+        String name = s.nextLine();
+
+        System.out.print("\nAcquisition Cost: ");
+        int valuation = s.nextInt();
+        s.nextLine();
+
+        if(ownerOption == 1){
+            Owner.updateOwnerAndAcquisition(owner_id, team_id, name, null, valuation, connectionUrl);
+            System.out.print("\nSuccessfully updated " + name + " for a cost of " + valuation +"!\n");
+        }
+        else if (ownerOption == 2){
+            Owner.updateOwnerAndAcquisition(owner_id, team_id, null, name, valuation, connectionUrl);
+            System.out.print("\nSuccessfully updated " + name + " for a cost of " + valuation +"!\n");
+        }
+    }
+
+    public static void getLeagueOwnersMenu(Scanner s){
+        System.out.print("League: ");
+        String league = s.nextLine();
+        ArrayList<ArrayList<String>> owners = Owner.getLeagueOwners(league, connectionUrl);
+        printTable(owners);
+    }
+
+
+    // ----------------------------------------------------------------- //
     public static void printTable(ArrayList<ArrayList<String>> table) {
         System.out.print("\n");
         for (ArrayList<String> row : table) {
@@ -370,7 +510,7 @@ public class DatabaseFrontend {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
         Scanner s = new Scanner(System.in);
 
         StateMachine stateMachine = new StateMachine(s);
