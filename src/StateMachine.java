@@ -18,7 +18,7 @@ public class StateMachine {
         {   "main",             "4",     "super_bowl",              "superBowlMenu"                 }, 
         {   "main",             "5",     "nba_championship",        "nbaChampionshipMenu"           },
         {   "main",             "6",     "stanley_cup",             "stanleyCupMenu"                },
-        {   "main",             "7",     "owner",                   "ownerMenu"                     }, // NEW 
+        {   "main",             "7",     "owner",                   "ownerMenu"                     },
         {   "cities",           "0",     "main",                    "mainMenu"                      },  
         {   "cities",           "1",     "cities",                  "insertCity"                    },
         {   "cities",           "2",     "cities",                  "deleteCity"                    },
@@ -71,13 +71,13 @@ public class StateMachine {
         {   "stanley_cup",      "4",     "stanley_cup",             "getAllStanleyCups"             },
         {   "stanley_cup",      "5",     "stanley_cup",             "getStanleyCupWinner"           },
         {   "stanley_cup",      "6",     "stanley_cup",             "getStanleyCupsWon"             },
-        {   "owner",            "0",     "owner",                   "mainMenu"                      },
+        {   "owner",            "0",     "main",                    "mainMenu"                      },
         {   "owner",            "1",     "owner",                   "insertOwner"                   },
         {   "owner",            "2",     "owner",                   "deleteOwner"                   },
         {   "owner",            "3",     "owner",                   "updateOwner"                   },
         {   "owner",            "4",     "owner",                   "getAllOwners"                  },
         {   "owner",            "5",     "owner",                   "getOwners"                     },
-        {   "owner",            "6",     "owner",                   "getOwnerGroups"                },
+        {   "owner",            "6",     "owner",                   "getOwnerGroupsMenu"            },
         {   "owner",            "7",     "owner",                   "assignOwnerToTeam"             },
         {   "owner",            "8",     "owner",                   "updateOwnerAndAcquisition"     },
         {   "owner",            "9",     "owner",                   "getLeagueOwners"               }
@@ -307,6 +307,7 @@ public class StateMachine {
             case "getStanleyCupsWon":
                 DatabaseFrontend.getStanleyCupsWon(s);
                 DatabaseFrontend.stanleyCupMenu();
+                break;
             case "ownerMenu":
                 DatabaseFrontend.ownerMenu();
                 break;

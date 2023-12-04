@@ -685,7 +685,7 @@ public class DatabaseFrontend {
                 "6. View all ownership groups\n" +
                 "7. Assign owner to team\n" +
                 "8. Update owner and acquisition value\n" +
-                "9. Get owners from a league" + 
+                "9. Get owners from a league\n" + 
                 "\n" +
                 "Choice: ");
     }
