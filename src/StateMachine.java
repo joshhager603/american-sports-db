@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class StateMachine {
     
     private String currentState = "main";
@@ -17,6 +18,7 @@ public class StateMachine {
         {   "main",             "4",     "super_bowl",              "superBowlMenu"                 }, 
         {   "main",             "5",     "nba_championship",        "nbaChampionshipMenu"           },
         {   "main",             "6",     "stanley_cup",             "stanleyCupMenu"                },
+        {   "main",             "7",     "owner",                   "ownerMenu"                     }, // NEW 
         {   "cities",           "0",     "main",                    "mainMenu"                      },  
         {   "cities",           "1",     "cities",                  "insertCity"                    },
         {   "cities",           "2",     "cities",                  "deleteCity"                    },
@@ -68,7 +70,17 @@ public class StateMachine {
         {   "stanley_cup",      "3",     "stanley_cup",             "updateStanleyCupWinner"        },
         {   "stanley_cup",      "4",     "stanley_cup",             "getAllStanleyCups"             },
         {   "stanley_cup",      "5",     "stanley_cup",             "getStanleyCupWinner"           },
-        {   "stanley_cup",      "6",     "stanley_cup",             "getStanleyCupsWon"             }
+        {   "stanley_cup",      "6",     "stanley_cup",             "getStanleyCupsWon"             },
+        {   "owner",            "0",     "owner",                   "mainMenu"                      },
+        {   "owner",            "1",     "owner",                   "insertOwner"                   },
+        {   "owner",            "2",     "owner",                   "deleteOwner"                   },
+        {   "owner",            "3",     "owner",                   "updateOwner"                   },
+        {   "owner",            "4",     "owner",                   "getAllOwners"                  },
+        {   "owner",            "5",     "owner",                   "getOwners"                     },
+        {   "owner",            "6",     "owner",                   "getOwnerGroups"                },
+        {   "owner",            "7",     "owner",                   "assignOwnerToTeam"             },
+        {   "owner",            "8",     "owner",                   "updateOwnerAndAcquisition"     },
+        {   "owner",            "9",     "owner",                   "getLeagueOwners"               }
     };
 
     public StateMachine(Scanner s){
@@ -295,6 +307,44 @@ public class StateMachine {
             case "getStanleyCupsWon":
                 DatabaseFrontend.getStanleyCupsWon(s);
                 DatabaseFrontend.stanleyCupMenu();
+            case "ownerMenu":
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "insertOwner":
+                DatabaseFrontend.insertOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "deleteOwner":
+                DatabaseFrontend.deleteOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "updateOwner":
+                DatabaseFrontend.updateOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getOwners":
+                DatabaseFrontend.getOwnersMenu();
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getOwnerGroupsMenu":
+                DatabaseFrontend.getOwnerGroupsMenu();
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getAllOwners":
+                DatabaseFrontend.getAllOwnersMenu();
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "assignOwnerToTeam":
+                DatabaseFrontend.assignOwnerMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "updateOwnerAndAcquisition":
+                DatabaseFrontend.updateOwnerAndAcquisitionMenu(s);
+                DatabaseFrontend.ownerMenu();
+                break;
+            case "getLeagueOwners":
+                DatabaseFrontend.getLeagueOwnersMenu(s);
+                DatabaseFrontend.ownerMenu();
                 break;
             case "none":
                 break;
