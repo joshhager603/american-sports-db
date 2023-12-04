@@ -22,6 +22,8 @@ public class StateMachine {
         {   "cities",     "5",     "cities",    "getCity"                   },
         {   "cities",     "6",     "cities",    "getArenasInCity"           },
         {   "cities",     "7",     "cities",    "getActiveTeamsInCity"      },
+        {   "cities",     "8",     "cities",    "deleteCitiesNoTeams"       },
+        {   "cities",     "9",     "cities",    "getCitiesNoTeams"          },
         {   "arena",      "0",     "main",      "mainMenu"                  },
         {   "arena",      "1",     "arena",     "insertArena"               },
         {   "arena",      "2",     "arena",     "deleteArena"               },
@@ -95,6 +97,14 @@ public class StateMachine {
                 break;
             case "getActiveTeamsInCity":
                 DatabaseFrontend.getActiveTeamsInCityMenu(s);
+                DatabaseFrontend.citiesMenu();
+                break;
+            case "deleteCitiesNoTeams":
+                DatabaseFrontend.deleteCitiesNoTeamsMenu();
+                DatabaseFrontend.citiesMenu();
+                break;
+            case "getCitiesNoTeams":
+                DatabaseFrontend.getCitiesNoTeamsMenu();
                 DatabaseFrontend.citiesMenu();
                 break;
             case "arenaMenu":

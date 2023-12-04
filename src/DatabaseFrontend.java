@@ -31,6 +31,8 @@ public class DatabaseFrontend {
                 "5. View a specific city\n" +
                 "6. View all arenas in a specific city\n" +
                 "7. View all active teams in a specific city\n" +
+                "8. Delete all cities with no active or inactive teams\n" +
+                "9. View all cities with no active or inactive teams\n" +
                 "\n" +
                 "Choice: ");
     }
@@ -103,6 +105,19 @@ public class DatabaseFrontend {
         ArrayList<ArrayList<String>> activeTeamsInCity = Cities.getActiveTeamsInCity(id, connectionUrl);
 
         printTable(activeTeamsInCity);
+    }
+
+    public static void deleteCitiesNoTeamsMenu() {
+        ArrayList<ArrayList<String>> citiesNoTeams = Cities.deleteCitiesNoTeams(connectionUrl);
+
+        System.out.print("\nSuccessfully deleted cities: ");
+        printTable(citiesNoTeams);
+    }
+
+    public static void getCitiesNoTeamsMenu() {
+        ArrayList<ArrayList<String>> citiesNoTeams = Cities.getCitiesNoTeams(connectionUrl);
+
+        printTable(citiesNoTeams);
     }
     // ----------------------------------------------------------------- //
 
